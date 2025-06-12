@@ -1,0 +1,85 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  DEVELOPER
+  MANAGER
+}
+
+enum Priority {
+  LOW
+  MEDIUM
+  HIGH
+  BLOCKER
+}
+
+enum Status {
+  OPEN
+  IN_PROGRESS
+  FIXED
+  PENDING_APPROVAL
+  CLOSED
+}
+
+model User {
+  id       Int       @id @default(autoincrement())
+  name     String
+  email    String    @unique
+  password String
+  role     Role
+  tasks    Task[]    @relation("TaskAssignee")
+  bugs     Bug[]     @relation("BugAssignee")
+  timeLogs TimeLog[]
+}
+
+model Task {
+  id           Int       @id @default(autoincrement())
+  title        String
+  description  String
+  assignedTo   User      @relation("TaskAssignee", fields: [assignedToId], references: [id])
+  assignedToId Int
+  priority     Priority
+  status       Status    @default(OPEN)
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+  timeLogs     TimeLog[]
+}
+
+model Bug {
+  id           Int       @id @default(autoincrement())
+  title        String
+  description  String
+  assignedTo   User      @relation("BugAssignee", fields: [assignedToId], references: [id])
+  assignedToId Int
+  priority     Priority
+  status       Status    @default(OPEN)
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+  timeLogs     TimeLog[]
+}
+
+model TimeLog {
+  id      Int      @id @default(autoincrement())
+  taskId  Int?
+  bugId   Int?
+  user    User     @relation(fields: [userId], references: [id])
+  userId  Int
+  minutes Int
+  date    DateTime @default(now())
+
+  task Task? @relation(fields: [taskId], references: [id])
+  bug  Bug?  @relation(fields: [bugId], references: [id])
+}
