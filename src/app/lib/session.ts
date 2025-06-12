@@ -1,6 +1,7 @@
 import "server-only";
 import { SignJWT, jwtVerify } from "jose";
 import { cookies } from "next/headers";
+import { NextRequest } from "next/server";
 
 type User = {
     id : string;
@@ -81,4 +82,17 @@ export async function verifySession(): Promise<{ user: User | null }> {
 export async function deleteSession(): Promise<void> {
   const cookieStore = await cookies();
   cookieStore.delete("session");
+}
+
+
+export async function verifySessionCookieFromRequest(request: NextRequest): Promise<string | null> {
+  const session = request.cookies.get("session")?.value || null;
+  if (!session) {
+    return null;
+  }
+  const payload = await decrypt(session);
+  if (!session || !payload || new Date(payload.expiresAt) < new Date()) {
+    return null;
+  }
+  return session;
 }

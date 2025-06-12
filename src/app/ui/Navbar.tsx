@@ -1,4 +1,3 @@
-// app/components/Navbar.tsx
 import Link from "next/link";
 import { verifySession } from "../lib/session";
 import { logout } from "../actions/auth";
@@ -10,16 +9,16 @@ export default async function Navbar() {
     <nav className="sticky top-0 z-50 bg-white shadow-sm border-b border-gray-100">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16">
-          {/* App Name - Left Side */}
           <div className="flex items-center">
             <Link href="/" className="flex-shrink-0 flex items-center">
-              <span className="text-2xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
-                Tracker
+              <span className="text-4xl font-mono font-bold">
+                <span className="text-indigo-600">tracker</span>
+                <span className="text-purple-500">.</span>
+                <span className="text-black font-light">app</span>
               </span>
             </Link>
           </div>
 
-          {/* Right Side Navigation */}
           <div className="flex items-center space-x-4">
             {user ? (
               <>
@@ -46,7 +45,6 @@ export default async function Navbar() {
               </Link>
             )}
 
-            {/* GitHub Logo */}
             <a
               href="https://github.com/kaartik2611/tracker-app"
               target="_blank"

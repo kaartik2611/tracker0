@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useActionState } from "react";
-import { authenticate } from "@/app/actions/auth"; // Replace with your actual auth action
+import { authenticate } from "@/app/actions/auth";
 
 const LoginCard = () => {
   const [errorMessage, dispatch, pending] = useActionState(authenticate, {
@@ -15,7 +15,6 @@ const LoginCard = () => {
           <h1 className="text-3xl font-bold text-indigo-600">Welcome Back</h1>
           <p className="mt-2 text-gray-600">Sign in to your account</p>
         </div>
-
         <form action={dispatch} className="space-y-6">
           <div>
             <label
