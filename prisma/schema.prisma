@@ -29,51 +29,65 @@ enum Status {
 }
 
 model User {
-  id       Int       @id @default(autoincrement())
-  name     String
-  email    String    @unique
-  password String
-  role     Role
-  tasks    Task[]    @relation("TaskAssignee")
-  bugs     Bug[]     @relation("BugAssignee")
-  timeLogs TimeLog[]
+  id         Int       @id @default(autoincrement())
+  name       String
+  email      String    @unique
+  password   String
+  role       Role
+  tasks      Task[]    @relation("TaskAssignee")
+  bugs       Bug[]     @relation("BugAssignee")
+  timeLogs   TimeLog[]
+  createdTasks Task[]  @relation("TaskCreator")
+  createdBugs  Bug[]   @relation("BugCreator")
 }
 
 model Task {
-  id           Int       @id @default(autoincrement())
-  title        String
-  description  String
-  assignedTo   User      @relation("TaskAssignee", fields: [assignedToId], references: [id])
-  assignedToId Int
-  priority     Priority
-  status       Status    @default(OPEN)
-  createdAt    DateTime  @default(now())
-  updatedAt    DateTime  @updatedAt
-  timeLogs     TimeLog[]
+  id            Int       @id @default(autoincrement())
+  title         String
+  description   String
+  priority      Priority
+  status        Status    @default(OPEN)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  assignedToId  Int
+  createdById   Int
+
+  assignedTo    User      @relation("TaskAssignee", fields: [assignedToId], references: [id])
+  createdBy     User      @relation("TaskCreator", fields: [createdById], references: [id])
+
+  timeLogs      TimeLog[]
 }
 
 model Bug {
-  id           Int       @id @default(autoincrement())
-  title        String
-  description  String
-  assignedTo   User      @relation("BugAssignee", fields: [assignedToId], references: [id])
-  assignedToId Int
-  priority     Priority
-  status       Status    @default(OPEN)
-  createdAt    DateTime  @default(now())
-  updatedAt    DateTime  @updatedAt
-  timeLogs     TimeLog[]
+  id            Int       @id @default(autoincrement())
+  title         String
+  description   String
+  priority      Priority
+  status        Status    @default(OPEN)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  assignedToId  Int
+  createdById   Int
+
+  assignedTo    User      @relation("BugAssignee", fields: [assignedToId], references: [id])
+  createdBy     User      @relation("BugCreator", fields: [createdById], references: [id])
+
+  timeLogs      TimeLog[]
 }
 
 model TimeLog {
-  id      Int      @id @default(autoincrement())
-  taskId  Int?
-  bugId   Int?
-  user    User     @relation(fields: [userId], references: [id])
-  userId  Int
-  minutes Int
-  date    DateTime @default(now())
-
-  task Task? @relation(fields: [taskId], references: [id])
-  bug  Bug?  @relation(fields: [bugId], references: [id])
+  id        Int      @id @default(autoincrement())
+  taskId    Int?
+  bugId     Int?
+  userId    Int
+  minutes   Int
+  date      DateTime @default(now())
+  archived  Boolean  @default(false)
+  comments  String?
+  createdAt DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id])
+  task      Task?    @relation(fields: [taskId], references: [id], onDelete: SetNull)
+  bug       Bug?     @relation(fields: [bugId], references: [id], onDelete: SetNull)
 }
