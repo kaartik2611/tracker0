@@ -11,7 +11,7 @@ export default async function Navbar() {
         <div className="flex justify-between h-16">
           <div className="flex items-center">
             <Link href="/" className="flex-shrink-0 flex items-center">
-              <span className="text-4xl font-mono font-bold">
+              <span className="text-4xl font-bold">
                 <span className="text-indigo-600">tracker</span>
                 <span className="text-purple-500">.</span>
                 <span className="text-black font-light">app</span>
@@ -45,8 +45,8 @@ export default async function Navbar() {
               </Link>
             )}
 
-            <a
-              href="https://github.com/kaartik2611/tracker-app"
+            <Link
+              href="https://github.com/kaartik2611/tracker0"
               target="_blank"
               rel="noopener noreferrer"
               className="text-gray-700 hover:text-indigo-600 transition-colors duration-200"
@@ -64,7 +64,7 @@ export default async function Navbar() {
                   clipRule="evenodd"
                 />
               </svg>
-            </a>
+            </Link>
           </div>
         </div>
       </div>
