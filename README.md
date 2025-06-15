@@ -1,6 +1,6 @@
 # Tracker App
 
-[![Live Demo](https://img.shields.io/badge/demo-live-brightgreen)](https://tracker-app.example.com)  
+[![Live Demo](https://img.shields.io/badge/demo-live-brightgreen)](https://tracker0-three.vercel.app)  
 A task and bug tracking system with role-based workflows.
 
 ## Tech Stack
