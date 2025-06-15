@@ -3,6 +3,7 @@ import users from "@/app/lib/users.json";
 import { createSession, deleteSession } from "../lib/session";
 import { redirect } from "next/navigation";
 import { z } from "zod";
+import { User } from "@/generated/prisma";
 
 type FormState = {
   errorMessage?: string;
@@ -38,18 +39,18 @@ export async function authenticate(
     };
   }
 
-    const user = users.find(
-      (user) => user.email === email && user.password === password
-    );
+  const foundUser = users.find(
+    (user) => user.email === email && user.password === password
+  );
 
-    if (user) {
-      await createSession(user);
-      return redirect("/dashboard?login=success");
-    } else {
-      return {
-        errorMessage: "Invalid email or password.",
-      };
-    }
+  if (foundUser) {
+    await createSession(foundUser as User);
+    return redirect("/dashboard?login=success");
+  } else {
+    return {
+      errorMessage: "Invalid email or password.",
+    };
+  }
 }
 
 export const logout = async () => {

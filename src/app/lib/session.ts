@@ -2,14 +2,7 @@ import "server-only";
 import { SignJWT, jwtVerify } from "jose";
 import { cookies } from "next/headers";
 import { NextRequest } from "next/server";
-
-type User = {
-    id : string;
-    name: string;
-    email: string;
-    password: string;
-    role: string;
-};
+import { User } from "@/generated/prisma";
 
 type SessionPayload = {
   user: User;
@@ -84,8 +77,9 @@ export async function deleteSession(): Promise<void> {
   cookieStore.delete("session");
 }
 
-
-export async function verifySessionCookieFromRequest(request: NextRequest): Promise<string | null> {
+export async function verifySessionCookieFromRequest(
+  request: NextRequest
+): Promise<string | null> {
   const session = request.cookies.get("session")?.value || null;
   if (!session) {
     return null;

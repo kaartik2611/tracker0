@@ -5,3 +5,9 @@
 4. prisma ORM for sql interation
 5. tailwind for styling
 6. zod for validation/parsing of schema 
+
+
+## Timeline
+
+1. edit schema.
+2. create users

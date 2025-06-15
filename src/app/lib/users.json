@@ -1,41 +1,41 @@
 [
     {
-        "id": "1",
+        "id": 1,
         "name": "Kaartik Nayak",
         "email": "kaartiknayak@x.com",
         "password": "password123",
         "role": "DEVELOPER"
     },
     {
-        "id": "10",
-        "name": "Kaartik Nayak",
+        "id": 10,
+        "name": "X Men",
         "email": "x@x.com",
-        "password":"mmm",
+        "password":"password123",
         "role": "DEVELOPER"
     },
     {
-        "id": "2",
+        "id": 2,
         "name": "Tony Stark",
         "email": "tonystart@x.com",
         "password": "password123",
         "role": "DEVELOPER"
     },
     {
-        "id": "3",
+        "id": 3,
         "name": "The Rock",
         "email": "therock@x.com",
         "password": "password123",
         "role": "DEVELOPER"
     },
     {
-        "id": "4",
+        "id": 4,
         "name": "Bruce Wayne",
         "email": "brucewayne@x.com",
         "password": "password123",
         "role": "DEVELOPER"
     },
     {
-        "id": "5",
+        "id": 5,
         "name": "Steve Rogers",
         "email": "steverogers@x.com",
         "password": "manager123",
