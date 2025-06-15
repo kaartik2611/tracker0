@@ -28,7 +28,6 @@ const FinalDashboard = ({
     initialize(user, developers);
   }, [user, developers, initialize]);
 
-  // Get filtered items
   const { activeTab, filterStatus, filterPriority, filterUser } =
     useDashboardStore();
   const displayedItems = activeTab === "tasks" ? tasks : bugs;

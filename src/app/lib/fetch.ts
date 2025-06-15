@@ -119,7 +119,7 @@ export const getTimeLogs = unstable_cache(
       return await prisma.timeLog.findMany({
         where: {
           date: {
-            gte: startOfWeek(new Date()), // Only show current week's logs
+            gte: startOfWeek(new Date()),
           },
         },
         orderBy: {
@@ -131,7 +131,7 @@ export const getTimeLogs = unstable_cache(
         where: {
           userId: user.id,
           date: {
-            gte: startOfWeek(new Date()), // Only show current week's logs
+            gte: startOfWeek(new Date()),
           },
         },
         orderBy: {

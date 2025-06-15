@@ -7,27 +7,6 @@ import { verifySession } from "../lib/session";
 
 type ItemType = "task" | "bug";
 
-// interface ItemInput {
-//   type: ItemType;
-//   title: string;
-//   description: string;
-//   priority: "LOW" | "MEDIUM" | "HIGH" | "BLOCKER";
-//   status: "OPEN" | "IN_PROGRESS" | "FIXED" | "PENDING_APPROVAL" | "CLOSED";
-//   assignedToId: number;
-//   minutesSpent: number;
-//   comment?: string;
-// }
-// interface UpdateInput {
-//   type: ItemType;
-//   id: number;
-//   description: string;
-//   priority: "LOW" | "MEDIUM" | "HIGH" | "BLOCKER";
-//   status: "OPEN" | "IN_PROGRESS" | "FIXED" | "PENDING_APPROVAL" | "CLOSED";
-//   assignedToId: number;
-//   minutesSpent: number;
-//   comment?: string;
-// }
-
 type ActionResult = {
   success: boolean;
   error?: boolean;
@@ -57,11 +36,11 @@ export async function createDeveloper(
   try {
     const newDev = await prisma.user.create({
       data: {
-        id: Number(Math.random() * 1000000), // Generate a random ID for simplicity, replace with proper ID generation in production
+        id: Number(Math.random() * 1000000),
         name,
         email,
         role,
-        password, // Ensure password is hashed before storing in production
+        password,
       },
     });
 
@@ -92,19 +71,6 @@ export async function createItem(
   if (!user) return { error: true, success: false, message: "Unauthorized" };
 
   console.log(formData);
-
-  // FormData {
-  //   type: 'bug',
-  //   title: 'bug number 1',
-  //   description: 'finally lets go',
-  //   priority: 'LOW',
-  //   status: 'IN_PROGRESS',
-  //   assignedToId: '1',
-  //   timeLogMinutes: '120',
-  //   timeLogComments: 'timelog comment for bug number 1'
-  // }
-
-  // Extract form data
 
   const data = {
     type: formData.get("type") as ItemType,
@@ -195,7 +161,6 @@ export async function createItem(
 
       console.log("Bug created:", bug);
 
-      // Create initial time log for bug creation
       const comment =
         data.userComment?.trim() ||
         `Created Bug #${bug.id}: '${data.title}' (${

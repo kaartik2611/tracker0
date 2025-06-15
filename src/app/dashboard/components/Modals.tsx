@@ -404,13 +404,11 @@ export function EditModal() {
                     disabled={isPending}
                     defaultValue={item.status}
                   >
-                    {allowedStatuses
-                      // .filter((status) => status !== "PENDING_APPROVAL")
-                      .map((status) => (
-                        <option key={status} value={status}>
-                          {status.replace("_", " ")}
-                        </option>
-                      ))}
+                    {allowedStatuses.map((status) => (
+                      <option key={status} value={status}>
+                        {status.replace("_", " ")}
+                      </option>
+                    ))}
                   </select>
                 </div>
                 <div>
