@@ -47,7 +47,7 @@ const FinalDashboard = ({
       <div className="flex sm:flex-grow justify-center mb-4 mx-auto">
         <div className="w-full space-y-4 p-4 bg-white rounded-lg border border-gray-200 shadow">
           <FilterBar />
-          <div className="overflow-y-auto max-h-96">
+          <div className="overflow-y-auto max-h-[512px]">
             <ItemsList items={filteredItems} timeLogs={timeLogs} />
           </div>
           <EditModal />
