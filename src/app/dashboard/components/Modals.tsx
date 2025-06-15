@@ -16,7 +16,11 @@ const StatusTransitions: StatusCheck = {
   [Status.CLOSED]: [Status.REOPENED],
   [Status.ARCHIVED]: [Status.REOPENED],
   [Status.REOPENED]: [Status.FIXED, Status.CLOSED],
-  [Status.PENDING_APPROVAL]: [Status.PENDING_APPROVAL],
+  [Status.PENDING_APPROVAL]: [
+    Status.PENDING_APPROVAL,
+    Status.FIXED,
+    Status.OPEN,
+  ],
 };
 
 export function CreateItemModal({ onClose }: CreateItemModalProps) {
@@ -316,7 +320,16 @@ export function EditModal() {
     }
   }, [state, setEditingItem]);
 
-  const allowedStatuses = StatusTransitions[item?.status as Status] || [];
+  let allowedStatuses = StatusTransitions[item?.status as Status] || [];
+
+  console.log("Allowed statuses for", item?.status, ":", allowedStatuses);
+
+  if (user?.role === "DEVELOPER" && item?.status === "PENDING_APPROVAL") {
+    // remove fixed from allowed statuses for developers
+    allowedStatuses = allowedStatuses.filter(
+      (status) => status !== Status.FIXED
+    );
+  }
   return (
     item && (
       <div className="fixed inset-0 bg-black/70 bg-opacity-50 flex items-center justify-center p-4 z-50">
@@ -437,7 +450,7 @@ export function EditModal() {
                 />
               </div>
 
-              {state?.message && (
+              {/* {state?.message && (
                 <div
                   className={`p-2 text-xs rounded ${
                     state.success
@@ -447,12 +460,15 @@ export function EditModal() {
                 >
                   {state.message}
                 </div>
-              )}
+              )} */}
 
               <div className="flex justify-end space-x-2 pt-2">
                 <button
                   type="button"
-                  onClick={() => setEditingItem(null)}
+                  onClick={() => {
+                    setEditingItem(null);
+                    state.message = "";
+                  }}
                   className="px-3 py-1 text-xs border border-gray-300 rounded text-gray-700 hover:bg-gray-50"
                   disabled={isPending}
                 >
